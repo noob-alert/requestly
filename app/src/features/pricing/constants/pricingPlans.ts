@@ -101,3 +101,9 @@ export const PricingPlans: PricingPlansType = {
     },
   },
 };
+
+export const RQBrowserstackPlanIdMap: Record<string, string> = {
+  [PRICING.PLAN_NAMES.LITE]: "Requestly - Lite",
+  [PRICING.PLAN_NAMES.BASIC_V2]: "Requestly - Basic",
+  [PRICING.PLAN_NAMES.PROFESSIONAL]: "Requestly - Professional",
+};
