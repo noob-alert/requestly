@@ -1,9 +1,9 @@
 import { RQBrowserstackPlanIdMap } from "./constants/pricingPlans";
 
-export const shouldShowNewCheckoutFlow = (isBStackIntegrationEnabled: boolean, checkoutVariation: string) => {
+export const shouldShowNewCheckoutFlow = (isBStackIntegrationEnabled: boolean, isBStackCheckoutEnabled: boolean) => {
   if (!isBStackIntegrationEnabled) return false;
 
-  if (checkoutVariation === "browserstack") return true;
+  if (isBStackCheckoutEnabled) return true;
 
   return false;
 };
