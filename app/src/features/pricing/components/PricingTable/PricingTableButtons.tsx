@@ -18,7 +18,8 @@ import { ChangePlanRequestConfirmationModal } from "../ChangePlanRequestConfirma
 import { getPrettyPlanName } from "utils/FormattingHelper";
 import { trackPricingPlanCTAClicked } from "modules/analytics/events/misc/business";
 import APP_CONSTANTS from "config/constants";
-import { redirectToPricingPlans } from "utils/RedirectionUtils";
+import { redirectToPricingPlans, redirectToUrl } from "utils/RedirectionUtils";
+import { createBStackCheckoutUrl } from "features/pricing/utils";
 
 const CTA_ONCLICK_FUNCTIONS = {
   MANAGE_SUBSCRIPTION: "manage-subscription",
@@ -251,7 +252,13 @@ export const PricingTableButtons: React.FC<PricingTableButtonsProps> = ({
       case CTA_ONCLICK_FUNCTIONS.CHECKOUT: {
         trackCheckoutButtonClicked(duration, columnPlanName, quantity, isUserTrialing, source);
         if (isNewCheckoutFlowEnabled) {
-          // REDIRECT TO  BSTACK CHECKOUT PAGE
+          const checkoutUrl = createBStackCheckoutUrl(
+            columnPlanName,
+            quantity,
+            duration === PRICING.DURATION.ANNUALLY,
+            window.location.href
+          );
+          redirectToUrl(checkoutUrl);
         } else {
           dispatch(
             globalActions.toggleActiveModal({
