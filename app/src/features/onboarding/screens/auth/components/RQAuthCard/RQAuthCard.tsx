@@ -46,6 +46,7 @@ export const RQAuthCard: React.FC<RQAuthCardProps> = ({
           <GoogleAuthButton
             successfulLoginCallback={successfulLoginCallback}
             failedLoginCallback={failedLoginCallback}
+            type="primary"
           />
         );
       case AuthProvider.PASSWORD:
@@ -78,7 +79,7 @@ export const RQAuthCard: React.FC<RQAuthCardProps> = ({
           return (
             <React.Fragment key={index}>
               {renderAuthProvider(provider)}
-              {index === 0 && authProviders.length > 1 ? <Divider plain>Or</Divider> : null}
+              {index === 0 && authProviders.length > 1 ? <Divider plain>or</Divider> : null}
             </React.Fragment>
           );
         })}

@@ -23,3 +23,13 @@ export enum AuthErrorCode {
   UNKNOWN = "unknown",
   DIFFERENT_USER = "different_user",
 }
+
+export enum AuthScreenMode {
+  MODAL = "modal",
+  PAGE = "page",
+}
+
+export enum AuthMode {
+  LOG_IN = "log_in",
+  SIGN_UP = "sign_up",
+}

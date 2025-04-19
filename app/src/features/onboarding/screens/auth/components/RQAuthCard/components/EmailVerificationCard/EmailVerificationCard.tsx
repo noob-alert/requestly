@@ -25,7 +25,13 @@ export const EmailVerificationCard: React.FC<EmailVerificationCardProps> = ({
     which causes google auth button to be re-rendered (causes flicker in button) 
   */
   const googleAuthButton = useMemo(() => {
-    return <GoogleAuthButton successfulLoginCallback={toggleAuthModal} failedLoginCallback={failedLoginCallback} />;
+    return (
+      <GoogleAuthButton
+        successfulLoginCallback={toggleAuthModal}
+        failedLoginCallback={failedLoginCallback}
+        type="secondary"
+      />
+    );
   }, [toggleAuthModal, failedLoginCallback]);
 
   useEffect(() => {
@@ -78,7 +84,7 @@ export const EmailVerificationCard: React.FC<EmailVerificationCardProps> = ({
         </RQButton>
         {authProviders.includes(AuthProvider.GOOGLE) ? (
           <>
-            <span className="verify-email-card-body__description">Or</span>
+            <span className="verify-email-card-body__description">or</span>
             {googleAuthButton}
           </>
         ) : null}
