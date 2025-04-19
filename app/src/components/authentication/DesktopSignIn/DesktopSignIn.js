@@ -137,7 +137,11 @@ const DesktopSignIn = () => {
               auth_provider: AUTH_PROVIDERS.GMAIL,
             });
           }
-          redirectToDesktopApp(`?isNewUser=${isNewUser}`);
+          /*
+          TODO: FIX THIS
+          We are sending user to /desktop/intercept-traffic post authentication for now, to make sure that user is able to see the persona questionnaire post redirection to desktop app.
+          */
+          redirectToDesktopApp(`/desktop/intercept-traffic?isNewUser=${isNewUser}`);
         })
         .catch((err) => {
           setIsError(true);
