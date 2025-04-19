@@ -26,7 +26,12 @@ export const AuthModal: React.FC<AuthModalProps> = ({
   const appMode = useSelector(getAppMode);
   const dispatch = useDispatch();
 
-  const toggleModal = () => {
+  const toggleModal = (value?: boolean) => {
+    if (typeof value === "boolean") {
+      dispatch(globalActions.toggleActiveModal({ modalName: "authModal", newValue: value }));
+      return;
+    }
+
     dispatch(globalActions.toggleActiveModal({ modalName: "authModal" }));
   };
 
