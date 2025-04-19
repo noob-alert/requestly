@@ -1,5 +1,3 @@
-import { RQBrowserstackPlanIdMap } from "./constants/pricingPlans";
-
 export const shouldShowNewCheckoutFlow = (isBStackIntegrationEnabled: boolean, isBStackCheckoutEnabled: boolean) => {
   if (!isBStackIntegrationEnabled) return false;
 
@@ -14,14 +12,13 @@ export const createBStackCheckoutUrl = (
   isAnnual: boolean,
   sourceUrl: string
 ): string => {
-  const bstackPlan = RQBrowserstackPlanIdMap[planName];
   const searchParams = new URLSearchParams({
     source: sourceUrl,
-    product_type: "requestly",
-    plan: bstackPlan,
-    quantity: quantity.toString(),
+    plan: planName,
     annual: isAnnual.toString(),
+    quantity: quantity.toString(),
+    product_type: "requestly",
   });
 
-  return `${process.env.BROWSERSTACK_BASE_URL}/orders/new?${searchParams.toString()}`;
+  return `${process.env.BROWSERSTACK_BASE_URL}/user/pricing-to-checkout?${searchParams.toString()}`;
 };
