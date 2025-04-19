@@ -68,6 +68,10 @@ const AuthHandler: React.FC<{}> = () => {
 
       const userData = await getUser(user.uid);
 
+      if (userData?.browserstackId) {
+        submitAttrUtil(TRACKING.ATTR.BROWSERSTACK_ID, userData.browserstackId);
+      }
+
       if (userData?.signupTs) {
         const signupDate = moment(userData.signupTs);
         submitAttrUtil(TRACKING.ATTR.DAYS_SINCE_SIGNUP, moment().diff(signupDate, "days"));
