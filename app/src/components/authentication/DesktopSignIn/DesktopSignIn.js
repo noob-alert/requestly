@@ -24,6 +24,7 @@ import { MdOutlineCheckCircle } from "@react-icons/all-files/md/MdOutlineCheckCi
 import STORAGE from "config/constants/sub/storage";
 import { globalActions } from "store/slices/global/slice";
 import { getDesktopAppAuthParams } from "../utils";
+import PATHS from "config/constants/sub/paths";
 import "./desktopSignIn.scss";
 
 const DesktopSignIn = () => {
@@ -141,7 +142,7 @@ const DesktopSignIn = () => {
           TODO: FIX THIS
           We are sending user to /desktop/intercept-traffic post authentication for now, to make sure that user is able to see the persona questionnaire post redirection to desktop app.
           */
-          redirectToDesktopApp(`/desktop/intercept-traffic?isNewUser=${isNewUser}`);
+          redirectToDesktopApp(`${PATHS.DESKTOP.INTERCEPT_TRAFFIC.ABSOLUTE}?isNewUser=${isNewUser}`);
         })
         .catch((err) => {
           setIsError(true);
