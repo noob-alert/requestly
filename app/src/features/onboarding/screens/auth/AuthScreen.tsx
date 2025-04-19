@@ -1,9 +1,9 @@
 import { useCallback, useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Button } from "antd";
 import AuthModalHeader from "features/onboarding/components/OnboardingHeader/OnboardingHeader";
 import { CompaniesLogoBanner } from "features/onboarding/components/auth/components/CompaniesLogoBanner";
-import { OnboardingCard } from "features/onboarding/components/OnboardingCard/OnboardingCard";
+import { OnboardingCard } from "features/onboarding/componentsV2/OnboardingCard/OnboardingCard";
 import APP_CONSTANTS from "config/constants";
 import { EnterEmailCard } from "./components/EnterEmailCard/EnterEmailCard";
 import { SignupWithBStackCard } from "./components/SignupWithBStackCard/SignupWithBStackCard";
@@ -17,9 +17,12 @@ import { sendEmailLinkForSignin } from "actions/FirebaseActions";
 import { toast } from "utils/Toast";
 import { useSelector } from "react-redux";
 import { getAppMode } from "store/selectors";
+import { NewSignupCard } from "./components/NewSignupCard/NewSignupCard";
+import PATHS from "config/constants/sub/paths";
 import "./authScreen.scss";
 
 export const AuthScreen = () => {
+  const location = useLocation();
   const navigate = useNavigate();
   const appMode = useSelector(getAppMode);
   const {
@@ -27,16 +30,18 @@ export const AuthScreen = () => {
     authMode,
     authProviders,
     authScreenMode,
+    isOnboardingScreenVisible,
     handleEmailChange,
     setAuthMode,
     setAuthProviders,
     toggleAuthModal,
     setIsSendEmailInProgress,
+    isClosable,
   } = useAuthScreenContext();
-
   const [authErrorCode, setAuthErrorCode] = useState<AuthErrorCode>(AuthErrorCode.NONE);
   const [showRQAuthForm, setShowRQAuthForm] = useState(false);
   const [isEmailVerificationScreenVisible, setIsEmailVerificationScreenVisible] = useState(false);
+  const isDesktopSignIn = location.pathname.includes(PATHS.AUTH.DEKSTOP_SIGN_IN.RELATIVE);
 
   const authErrorMessage = useMemo(() => {
     switch (authErrorCode) {
@@ -85,14 +90,14 @@ export const AuthScreen = () => {
       } else if (!metadata.isExistingUser) {
         setAuthMode(APP_CONSTANTS.AUTH.ACTION_LABELS.SIGN_UP);
       } else {
-        if (metadata.providers.length === 1 && metadata.providers[0] === AuthProvider.PASSWORD) {
+        if (metadata.providers.length === 1 && metadata.providers[0] === AuthProvider.PASSWORD && !isDesktopSignIn) {
           handleSendEmailLink();
         } else {
           setShowRQAuthForm(true);
         }
       }
     },
-    [navigate, setAuthMode, setAuthProviders, handleSendEmailLink]
+    [navigate, setAuthMode, setAuthProviders, handleSendEmailLink, isDesktopSignIn]
   );
 
   const authModeToggleText = (
@@ -137,7 +142,7 @@ export const AuthScreen = () => {
     <div className="auth-screen-container">
       <div className="auth-screen-content">
         <AuthModalHeader
-          hideCloseBtn={authScreenMode !== AuthScreenMode.MODAL}
+          hideCloseBtn={!isClosable || authScreenMode !== AuthScreenMode.MODAL}
           onHeaderButtonClick={handleOnHeaderButtonClick}
         />
         {isEmailVerificationScreenVisible ? (
@@ -164,25 +169,31 @@ export const AuthScreen = () => {
           </OnboardingCard>
         ) : (
           <>
-            <div className="w-full">
-              {authErrorMessage.length ? (
-                <div className="auth-screen-error-message">
-                  <MdOutlineInfo />
-                  <span>{authErrorMessage}</span>
+            {isOnboardingScreenVisible ? (
+              <NewSignupCard />
+            ) : (
+              <>
+                <div className="w-full">
+                  {authErrorMessage.length ? (
+                    <div className="auth-screen-error-message">
+                      <MdOutlineInfo />
+                      <span>{authErrorMessage}</span>
+                    </div>
+                  ) : null}
+                  <OnboardingCard>
+                    {authMode === APP_CONSTANTS.AUTH.ACTION_LABELS.LOG_IN ? (
+                      <EnterEmailCard
+                        onEmailChange={handleEmailChange}
+                        onAuthSyncVerification={handlePostAuthSyncVerification}
+                      />
+                    ) : (
+                      <SignupWithBStackCard onBackButtonClick={handleOnBackClick} />
+                    )}
+                  </OnboardingCard>
                 </div>
-              ) : null}
-              <OnboardingCard>
-                {authMode === APP_CONSTANTS.AUTH.ACTION_LABELS.LOG_IN ? (
-                  <EnterEmailCard
-                    onEmailChange={handleEmailChange}
-                    onAuthSyncVerification={handlePostAuthSyncVerification}
-                  />
-                ) : (
-                  <SignupWithBStackCard onBackButtonClick={handleOnBackClick} />
-                )}
-              </OnboardingCard>
-            </div>
-            {authModeToggleText}
+                {authModeToggleText}
+              </>
+            )}
           </>
         )}
       </div>
