@@ -19,6 +19,10 @@
       font-weight: var(--requestly-font-weight-medium);
       font-size: var(--requestly-font-size-lg);
       color: var(--requestly-color-text-default);
+
+      svg {
+        color: var(--requestly-color-text-default);
+      }
     }
 
     &-description {
