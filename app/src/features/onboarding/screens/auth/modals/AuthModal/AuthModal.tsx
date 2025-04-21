@@ -27,12 +27,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
   const dispatch = useDispatch();
 
   const toggleModal = (value?: boolean) => {
-    if (typeof value === "boolean") {
-      dispatch(globalActions.toggleActiveModal({ modalName: "authModal", newValue: value }));
-      return;
-    }
-
-    dispatch(globalActions.toggleActiveModal({ modalName: "authModal" }));
+    dispatch(globalActions.toggleActiveModal({ modalName: "authModal", newValue: value }));
   };
 
   return (
