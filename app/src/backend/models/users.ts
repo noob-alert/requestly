@@ -7,4 +7,10 @@ export interface User {
   signupTs: number;
   username: string;
   browserstackId?: string;
+  "block-config"?: {
+    grr: {
+      isBlocked: boolean;
+      reason: string;
+    };
+  };
 }
