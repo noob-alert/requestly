@@ -147,7 +147,7 @@ const WorkspaceSelector = () => {
     ...sortedAvailableWorkspaces.filter((team) => !team?.archived),
     ...sortedAvailableWorkspaces.filter((team) => team?.archived),
   ];
-  console.log({ sortedAvailableWorkspaces });
+  
   const appMode = useSelector(getAppMode);
   const activeWorkspaceId = useSelector(getActiveWorkspaceId);
   const activeWorkspace = useSelector(getActiveWorkspace);
