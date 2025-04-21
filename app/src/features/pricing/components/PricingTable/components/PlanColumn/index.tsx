@@ -177,8 +177,6 @@ export const PlanColumn: React.FC<PlanColumnProps> = ({
     [sendNotification, planName, source, user.loggedIn]
   );
 
-  console.log("quantity", quantity);
-
   const cardSubtitle = <>{planCardSubtitle ? <Typography.Text>{planCardSubtitle}</Typography.Text> : null}</>;
 
   return (
