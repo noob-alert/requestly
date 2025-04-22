@@ -61,6 +61,10 @@ export const updateUserDisplayName = (prevState: GlobalSliceState, action: Paylo
   prevState.user.details.profile.displayName = action.payload;
 };
 
+export const updateUserBlockConfig = (prevState: GlobalSliceState, action: PayloadAction<Record<string, any>>) => {
+  prevState.user.details.profile.blockConfig = action.payload;
+};
+
 export const updateUserLimitReached = (prevState: GlobalSliceState, action: PayloadAction<boolean>) => {
   prevState.user.isLimitReached = action.payload;
 };
