@@ -1,4 +1,5 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useLayoutEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Modal } from "antd";
 import { AuthScreen } from "../../AuthScreen";
 import { AuthScreenContextProvider } from "../../context";
@@ -10,6 +11,7 @@ import { DesktopAppAuthScreen } from "../../desktopAppAuth/DesktopAppAuthScreen"
 import { AuthScreenMode } from "../../types";
 import { globalActions } from "store/slices/global/slice";
 import { getUserAuthDetails } from "store/slices/global/user/selectors";
+import { redirectToOAuthUrl } from "utils/RedirectionUtils";
 import "./authModal.scss";
 interface AuthModalProps {
   isOpen: boolean;
@@ -24,6 +26,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
   eventSource = "",
   authMode = APP_CONSTANTS.AUTH.ACTION_LABELS.LOG_IN,
 }) => {
+  const navigate = useNavigate();
   const appMode = useSelector(getAppMode);
   const dispatch = useDispatch();
   const user = useSelector(getUserAuthDetails);
@@ -40,6 +43,20 @@ export const AuthModal: React.FC<AuthModalProps> = ({
       toggleModal(false);
     }
   }, [user.loggedIn, toggleModal]);
+
+  useLayoutEffect(() => {
+    if (
+      appMode !== GLOBAL_CONSTANTS.APP_MODES.DESKTOP &&
+      authMode === APP_CONSTANTS.AUTH.ACTION_LABELS.SIGN_UP &&
+      isOpen
+    ) {
+      redirectToOAuthUrl(navigate);
+    }
+  }, [appMode, authMode, isOpen, navigate]);
+
+  if (appMode !== GLOBAL_CONSTANTS.APP_MODES.DESKTOP && authMode === APP_CONSTANTS.AUTH.ACTION_LABELS.SIGN_UP) {
+    return null;
+  }
 
   return (
     <Modal
