@@ -16,13 +16,15 @@ import PricingFAQs from "./components/FAQs";
 import PricingPageFooter from "./components/PricingPageFooter";
 import EnterpriseRequestBanner from "./components/EnterpriseRequestBanner";
 import ProductSwitcher from "../ProductSwitcher";
-import "./pricingIndexPage.scss";
 import { kebabCase } from "lodash";
 import { StudentProgram } from "./components/StudentProgram";
 import { isSafariBrowser } from "actions/ExtensionActions";
+import { useFeatureIsOn } from "@growthbook/growthbook-react";
+import "./pricingIndexPage.scss";
 
 export const PricingIndexPage = () => {
   const navigate = useNavigate();
+  const isBrowserStackIntegrationEnabled = useFeatureIsOn("browserstack_integration");
 
   const [activeProduct, setActiveProduct] = useState(
     isSafariBrowser() ? PRICING.PRODUCTS.API_CLIENT : PRICING.PRODUCTS.HTTP_RULES
@@ -36,7 +38,9 @@ export const PricingIndexPage = () => {
           <div className="pricing-navbar-content">
             <img
               className="logo"
-              src={"/assets/media/common/rq_logo_full.svg"}
+              src={`/assets/media/common/${
+                isBrowserStackIntegrationEnabled ? "RQ-BStack Logo.svg" : "rq_logo_full.svg"
+              }`}
               alt="requestly logo"
               onClick={() => redirectToRules(navigate)}
             />

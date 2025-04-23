@@ -4,6 +4,7 @@ import { redirectToRules } from "utils/RedirectionUtils";
 import { Layout, Col, Row } from "antd";
 import HeaderUser from "layouts/DashboardLayout/MenuHeader/HeaderUser";
 import "./index.css";
+import { useFeatureIsOn } from "@growthbook/growthbook-react";
 
 interface HeaderProps {
   showUserHeader?: boolean;
@@ -12,13 +13,14 @@ interface HeaderProps {
 
 export const FullPageHeader: React.FC<HeaderProps> = ({ showUserHeader = false, doRedirectOnLogoClick = false }) => {
   const navigate = useNavigate();
+  const isBrowserStackIntegrationEnabled = useFeatureIsOn("browserstack_integration");
   return (
     <Layout.Header className="full-page-navbar">
       <Row className="w-full" justify="space-between" align="middle">
         <Col>
           <img
             className="logo"
-            src={"/assets/media/common/rq_logo_full.svg"}
+            src={`/assets/media/common/${isBrowserStackIntegrationEnabled ? "RQ-BStack Logo.svg" : "rq_logo_full.svg"}`}
             alt="requestly logo"
             onClick={() => (doRedirectOnLogoClick ? redirectToRules(navigate) : {})}
           />

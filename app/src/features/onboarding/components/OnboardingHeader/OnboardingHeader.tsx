@@ -15,10 +15,10 @@ const OnboardingHeader: React.FC<OnboardingHeaderProps> = ({
   isOnboarding = false,
   onHeaderButtonClick,
 }) => {
-  const isBrowserstackIntegrationEnabled = useFeatureIsOn("browserstack_integration");
+  const isBrowserStackIntegrationEnabled = useFeatureIsOn("browserstack_integration");
   return (
     <div className="onboarding-header">
-      {isBrowserstackIntegrationEnabled ? (
+      {isBrowserStackIntegrationEnabled ? (
         <img src="/assets/media/common/RQ-BStack Logo.svg" alt="Requestly by Browserstack" />
       ) : (
         <img
