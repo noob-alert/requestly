@@ -3,20 +3,10 @@ import Logger from "lib/logger";
 import { getNodeRef } from "../../actions/FirebaseActions";
 import { globalActions } from "store/slices/global/slice";
 import { getUser } from "backend/user/getUser";
-import { doc, getFirestore, onSnapshot } from "firebase/firestore";
-import firebaseApp from "firebase";
 
 const userNodeListener = (dispatch, uid) => {
   if (uid) {
     try {
-      const db = getFirestore(firebaseApp);
-      onSnapshot(doc(db, "users", uid), (doc) => {
-        if (doc.exists()) {
-          const userDetails = doc.data();
-          dispatch(globalActions.updateUserBlockConfig(userDetails?.["block-config"]));
-        }
-      });
-
       const userNodeRef = getNodeRef(["users", uid, "profile"]);
       onValue(userNodeRef, async (snapshot) => {
         const userDetails = snapshot.val();
