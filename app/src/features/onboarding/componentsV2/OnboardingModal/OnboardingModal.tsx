@@ -6,7 +6,7 @@ import { AuthScreenMode } from "features/onboarding/screens/auth/types";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserAuthDetails } from "store/slices/global/user/selectors";
 import { getAndUpdateInstallationDate } from "utils/Misc";
-import { getAppMode, getHasSeenOnboardingModal } from "store/selectors";
+import { getAppMode } from "store/selectors";
 import { globalActions } from "store/slices/global/slice";
 import { useIsAuthSkipped } from "hooks";
 import "./OnboardingModal.scss";
@@ -16,34 +16,32 @@ export const OnboardingModal = () => {
   const appMode = useSelector(getAppMode);
   const user = useSelector(getUserAuthDetails);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const hasSeenOnboardingModal = useSelector(getHasSeenOnboardingModal);
   const isAuthSkipped = useIsAuthSkipped();
 
   useEffect(() => {
     if (user.loggedIn) {
       setIsModalVisible(false);
+      dispatch(globalActions.updateIsOnboardingCompleted(true));
     }
-  }, [user.loggedIn]);
+  }, [user.loggedIn, dispatch]);
 
   useEffect(() => {
     getAndUpdateInstallationDate(appMode, false, false)
       .then((install_date) => {
         if (install_date) {
-          if (new Date(install_date) >= new Date("2025-02-07") && !hasSeenOnboardingModal && !user.loggedIn) {
+          if (new Date(install_date) >= new Date("2025-02-07") && !user.loggedIn) {
             if (isAuthSkipped) {
-              dispatch(globalActions.updateHasSeenOnboardingModal(true));
+              dispatch(globalActions.updateIsOnboardingCompleted(true));
               return;
             }
-
             setIsModalVisible(true);
-            dispatch(globalActions.updateHasSeenOnboardingModal(true));
           }
         }
       })
       .catch((err) => {
         console.error(err);
       });
-  }, [appMode, dispatch, hasSeenOnboardingModal, isAuthSkipped, user.loggedIn]);
+  }, [appMode, dispatch, isAuthSkipped, user.loggedIn]);
 
   if (!user.loggedIn) {
     return (
