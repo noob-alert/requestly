@@ -9,7 +9,6 @@ export const useIsGrrEnabled = () => {
   const user = useSelector(getUserAuthDetails);
   const isLoggedIn = user?.loggedIn;
   const uid = user?.details?.profile?.uid;
-
   const [isGrrEnabled, setIsGrrEnabled] = useState(false);
 
   useEffect(() => {

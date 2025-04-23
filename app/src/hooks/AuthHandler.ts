@@ -79,8 +79,6 @@ const AuthHandler: React.FC<{}> = () => {
         dispatch(globalActions.updateUsername({ username: userData.username }));
       }
 
-      dispatch(globalActions.updateUserBlockConfig(userData?.["block-config"]));
-
       dispatch(
         globalActions.updateUserInfo({
           loggedIn: true,

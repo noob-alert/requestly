@@ -12,7 +12,6 @@ export interface UserAuth {
       providerId: string;
       isSyncEnabled?: boolean;
       isBackupEnabled?: boolean;
-      blockConfig: Record<string, any>;
     };
     isLoggedIn?: boolean;
     username?: string;
