@@ -69,7 +69,7 @@ export const TeamPlanStatus: React.FC<{
         <Col className="team-plan-status-badge-text">
           {planStatus === PlanStatus.EXPIRING_SOON && cancelAtPeriodEnd
             ? daysLeftInCancellation
-            : capitalize(planStatus)}
+            : capitalize(subscriptionStatus === "trialing" ? "trial" : planStatus)}
         </Col>
         {/* TODO: add text for expired and expiring soon plan status */}
       </Row>
