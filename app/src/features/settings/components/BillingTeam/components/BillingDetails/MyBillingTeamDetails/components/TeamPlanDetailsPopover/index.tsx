@@ -15,7 +15,7 @@ interface Props {
 }
 
 export const TeamPlanDetailsPopover: React.FC<Props> = ({ billingTeamDetails, closePopover, isAnnualPlan }) => {
-  const planDetails = billingTeamDetails.subscriptionDetails;
+  const planDetails = billingTeamDetails?.subscriptionDetails;
 
   const planName = useMemo(() => {
     return getPlanNameFromId(planDetails.plan) === "basic-v2" ? "basic" : getPlanNameFromId(planDetails.plan);
