@@ -107,7 +107,9 @@ export const TeamPlanDetails: React.FC<{ billingTeamDetails: BillingTeamDetails 
           <div className="team-plan-details-section">
             <Row align="middle" gutter={8}>
               <Col className="team-plan-details-section-plan-name">
-                {getPrettyPlanName(getPlanNameFromId(billingTeamDetails?.subscriptionDetails?.plan))} team plan
+                {getPrettyPlanName(getPlanNameFromId(billingTeamDetails?.subscriptionDetails?.plan))}{" "}
+                {`${billingTeamDetails?.subscriptionDetails?.subscriptionStatus === "trialing" ? "trial" : "team"}`}{" "}
+                plan
               </Col>
               <Col>
                 <Popover
