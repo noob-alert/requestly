@@ -9,7 +9,6 @@ import firebaseApp from "firebase";
 const userNodeListener = (dispatch, uid) => {
   if (uid) {
     try {
-      console.log("!!!debug", "uid", uid);
       const db = getFirestore(firebaseApp);
       onSnapshot(doc(db, "users", uid), (doc) => {
         if (doc.exists()) {
