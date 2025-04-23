@@ -1,11 +1,10 @@
 import firebaseApp from "firebase";
 import { doc, getFirestore, onSnapshot } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { getUserAuthDetails } from "store/slices/global/user/selectors";
 
 export const useIsGrrEnabled = () => {
-  const dispatch = useDispatch();
   const user = useSelector(getUserAuthDetails);
   const isLoggedIn = user?.loggedIn;
   const uid = user?.details?.profile?.uid;
@@ -29,7 +28,7 @@ export const useIsGrrEnabled = () => {
     return () => {
       unsubscribeListener?.();
     };
-  }, [dispatch, isLoggedIn, uid]);
+  }, [isLoggedIn, uid]);
 
   return { isGrrEnabled };
 };
