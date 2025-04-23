@@ -50,11 +50,7 @@ export const BillingInvoiceCard: React.FC = () => {
         {billingTeamDetails.browserstackGroupId ? (
           <>
             <div className="text-bold text-white billing-invoice-card-title">Your Invoices</div>
-            <div
-              style={{
-                color: "#bbb",
-              }}
-            >
+            <div className="text-subtle">
               {" "}
               To view or manage you invoices, please visit the Browserstack billing dashboard.
             </div>
