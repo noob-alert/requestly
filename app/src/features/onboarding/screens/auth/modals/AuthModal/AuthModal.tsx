@@ -38,6 +38,9 @@ export const AuthModal: React.FC<AuthModalProps> = ({
     [dispatch]
   );
 
+  const isWebAppSignup =
+    appMode !== GLOBAL_CONSTANTS.APP_MODES.DESKTOP && authMode === APP_CONSTANTS.AUTH.ACTION_LABELS.SIGN_UP;
+
   useEffect(() => {
     if (user.loggedIn) {
       toggleModal(false);
@@ -45,16 +48,12 @@ export const AuthModal: React.FC<AuthModalProps> = ({
   }, [user.loggedIn, toggleModal]);
 
   useLayoutEffect(() => {
-    if (
-      appMode !== GLOBAL_CONSTANTS.APP_MODES.DESKTOP &&
-      authMode === APP_CONSTANTS.AUTH.ACTION_LABELS.SIGN_UP &&
-      isOpen
-    ) {
+    if (isWebAppSignup && isOpen) {
       redirectToOAuthUrl(navigate);
     }
-  }, [appMode, authMode, isOpen, navigate]);
+  }, [isWebAppSignup, isOpen, navigate]);
 
-  if (appMode !== GLOBAL_CONSTANTS.APP_MODES.DESKTOP && authMode === APP_CONSTANTS.AUTH.ACTION_LABELS.SIGN_UP) {
+  if (isWebAppSignup) {
     return null;
   }
 
