@@ -285,6 +285,6 @@ export const updateNewUserPersona = (prevState: GlobalSliceState, action: Payloa
   prevState.onboarding.userPersona = action.payload;
 };
 
-export const updateHasSeenOnboardingModal = (prevState: GlobalSliceState, action: PayloadAction<boolean>) => {
-  prevState.onboarding.hasSeenOnboardingModal = action.payload;
+export const updateIsOnboardingCompleted = (prevState: GlobalSliceState, action: PayloadAction<boolean>) => {
+  prevState.onboarding.isOnboardingCompleted = action.payload;
 };
