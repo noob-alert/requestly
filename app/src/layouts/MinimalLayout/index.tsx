@@ -4,8 +4,8 @@ import HeaderUser from "layouts/DashboardLayout/MenuHeader/HeaderUser";
 import { redirectToRoot } from "utils/RedirectionUtils";
 import { Outlet, useNavigate } from "react-router-dom";
 import Footer from "components/sections/Footer";
+import { useIsBrowserStackIntegrationOn } from "hooks/useIsBrowserStackIntegrationOn";
 import "./index.scss";
-import { useFeatureIsOn } from "@growthbook/growthbook-react";
 
 interface MinimalLayoutProps {
   children?: React.ReactNode;
@@ -13,7 +13,7 @@ interface MinimalLayoutProps {
 
 const MinimalLayout: React.FC<MinimalLayoutProps> = ({ children = null }) => {
   const navigate = useNavigate();
-  const isBrowserStackIntegrationEnabled = useFeatureIsOn("browserstack_integration");
+  const isBrowserStackIntegrationOn = useIsBrowserStackIntegrationOn();
 
   return (
     <div className="minimal-layout">
@@ -22,7 +22,7 @@ const MinimalLayout: React.FC<MinimalLayoutProps> = ({ children = null }) => {
           width={94}
           height={32}
           className="logo"
-          src={`/assets/media/common/${isBrowserStackIntegrationEnabled ? "RQ-BStack Logo.svg" : "rq_logo_full.svg"}`}
+          src={`/assets/media/common/${isBrowserStackIntegrationOn ? "RQ-BStack Logo.svg" : "rq_logo_full.svg"}`}
           alt="Requestly"
           onClick={() => redirectToRoot(navigate)}
         />

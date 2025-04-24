@@ -15,6 +15,7 @@ import { MdOutlineHelpOutline } from "@react-icons/all-files/md/MdOutlineHelpOut
 import { PlanQuantitySelector } from "../PlanQuantitySelector/PlanQuantitySelector";
 import { shouldShowNewCheckoutFlow } from "features/pricing/utils";
 import { useFeatureIsOn } from "@growthbook/growthbook-react";
+import { useIsBrowserStackIntegrationOn } from "hooks/useIsBrowserStackIntegrationOn";
 
 interface PlanColumnProps {
   planName: string;
@@ -42,12 +43,12 @@ export const PlanColumn: React.FC<PlanColumnProps> = ({
   const [disbaleUpgradeButton, setDisbaleUpgradeButton] = useState(false);
   const hasFiddledWithQuantity = useRef(false);
 
-  const isBrowserstackIntegrationEnabled = useFeatureIsOn("browserstack_integration");
+  const isBrowserstackIntegrationOn = useIsBrowserStackIntegrationOn();
   const isBrowserstackCheckoutEnabled = useFeatureIsOn("browserstack_checkout");
 
   const isNewCheckoutFlowEnabled = useMemo(
-    () => shouldShowNewCheckoutFlow(isBrowserstackIntegrationEnabled, isBrowserstackCheckoutEnabled),
-    [isBrowserstackIntegrationEnabled, isBrowserstackCheckoutEnabled]
+    () => shouldShowNewCheckoutFlow(isBrowserstackIntegrationOn, isBrowserstackCheckoutEnabled),
+    [isBrowserstackIntegrationOn, isBrowserstackCheckoutEnabled]
   );
 
   const getHeaderPlanName = () => {

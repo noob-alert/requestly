@@ -4,14 +4,14 @@ import { EVENTS, trackAddToChromeClicked, trackRequestDocumentClicked } from "./
 import RequestDocsModal from "./RequestDocsModal";
 import { getFunctions, httpsCallable } from "firebase/functions";
 import LINKS from "config/constants/sub/links";
-import { useFeatureIsOn } from "@growthbook/growthbook-react";
+import { useIsBrowserStackIntegrationOn } from "hooks/useIsBrowserStackIntegrationOn";
 import "./PricingPageFooter.scss";
 
 const { Title, Link } = Typography;
 
 const PricingPageFooter: React.FC = () => {
   const [isRequestDocsModalOpen, setisRequestDocsModalOpen] = useState(false);
-  const isBrowserStackIntegrationEnabled = useFeatureIsOn("browserstack_integration");
+  const isBrowserStackIntegrationOn = useIsBrowserStackIntegrationOn();
 
   const handleDocRequiredOnClick = () => {
     trackRequestDocumentClicked();
@@ -42,9 +42,7 @@ const PricingPageFooter: React.FC = () => {
               className="rq-logo"
               width={200}
               height={48}
-              src={`/assets/media/common/${
-                isBrowserStackIntegrationEnabled ? "RQ-BStack Logo.svg" : "rq_logo_full.svg"
-              }`}
+              src={`/assets/media/common/${isBrowserStackIntegrationOn ? "RQ-BStack Logo.svg" : "rq_logo_full.svg"}`}
               alt="Requestly logo"
             />
             <div className="caption">
