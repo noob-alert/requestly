@@ -46,6 +46,8 @@ export const PlanColumn: React.FC<PlanColumnProps> = ({
   const isBrowserstackIntegrationOn = useIsBrowserStackIntegrationOn();
   const isBrowserstackCheckoutEnabled = useFeatureIsOn("browserstack_checkout");
 
+  const currentSeats = user.details?.planDetails?.subscription?.quantity;
+
   const isNewCheckoutFlowEnabled = useMemo(
     () => shouldShowNewCheckoutFlow(isBrowserstackIntegrationOn, isBrowserstackCheckoutEnabled),
     [isBrowserstackIntegrationOn, isBrowserstackCheckoutEnabled]
@@ -187,6 +189,15 @@ export const PlanColumn: React.FC<PlanColumnProps> = ({
         planName === PRICING.PLAN_NAMES.LITE && duration === PRICING.DURATION.MONTHLY ? "disabled-col" : ""
       }`}
     >
+      {planName === user.details?.planDetails?.planName ? (
+        <div className="plan-card-current-header">
+          {" "}
+          CURRENT PLAN{" "}
+          {planName === PRICING.PLAN_NAMES.BASIC || planName === PRICING.PLAN_NAMES.PROFESSIONAL
+            ? `- ${user.details?.planDetails?.subscription?.quantity} SEATS`
+            : ""}
+        </div>
+      ) : null}
       <div className="plan-card-middle-section">
         <Space size={8}>
           {quantity === Infinity ? (
@@ -247,6 +258,9 @@ export const PlanColumn: React.FC<PlanColumnProps> = ({
                 planName !== PRICING.PLAN_NAMES.LITE) ||
                 (product === PRICING.PRODUCTS.API_CLIENT && planName === PRICING.PLAN_NAMES.API_CLIENT_ENTERPRISE)) && (
                 <PlanQuantitySelector
+                  columnPlanName={planName}
+                  currentPlanName={user.details?.planDetails?.planName}
+                  currentSeats={currentSeats}
                   isNewCheckoutFlowEnabled={isNewCheckoutFlowEnabled}
                   quantity={quantity}
                   handleQuantityChange={handleQuantityChange}
@@ -263,7 +277,7 @@ export const PlanColumn: React.FC<PlanColumnProps> = ({
           </Row>
         )}
         {quantity !== Infinity ? (
-          <Row className="annual-bill mt-8" style={{ display: planCardSubtitle ? "flex" : "none" }}>
+          <Row className="annual-bill mt-8" style={{ display: "flex", minHeight: "17px" }}>
             {duration === PRICING.DURATION.MONTHLY ? (
               planName === PRICING.PLAN_NAMES.LITE ? (
                 cardSubtitle
@@ -278,6 +292,7 @@ export const PlanColumn: React.FC<PlanColumnProps> = ({
         <Row
           style={{
             marginTop: "24px",
+            minHeight: "30px",
           }}
         >
           <PricingTableButtons
