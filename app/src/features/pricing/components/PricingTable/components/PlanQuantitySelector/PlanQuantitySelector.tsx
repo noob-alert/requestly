@@ -76,6 +76,7 @@ export const PlanQuantitySelector: React.FC<PlanQuantitySelectorProps> = ({
   }, [currentPlanName, columnPlanName, currentSeats]);
 
   const filteredOptions = useMemo(() => {
+    if (!currentPlanName) return DEFAULT_QUANTITY_OPTIONS;
     return DEFAULT_QUANTITY_OPTIONS.filter((option) => {
       if (option.value === Infinity) return true;
       if (columnPlanName === currentPlanName) return option.value > currentSeats;
@@ -85,9 +86,13 @@ export const PlanQuantitySelector: React.FC<PlanQuantitySelectorProps> = ({
 
   useEffect(() => {
     if (!currentPlanName) return;
-
-    handleQuantityChange(minQuantity);
-  }, [currentPlanName, handleQuantityChange, minQuantity]);
+    if (isNewCheckoutFlowEnabled) {
+      const ceilValue = filteredOptions.find((option) => option.value >= minQuantity);
+      handleQuantityChange(ceilValue?.value ?? minQuantity);
+    } else {
+      handleQuantityChange(minQuantity);
+    }
+  }, [currentPlanName, handleQuantityChange, minQuantity, isNewCheckoutFlowEnabled, filteredOptions]);
 
   if (currentPlanName === PRICING.PLAN_NAMES.PROFESSIONAL && columnPlanName === PRICING.PLAN_NAMES.BASIC) return null;
   if (isNewCheckoutFlowEnabled) {
