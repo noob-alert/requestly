@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Col, Layout, Row, Switch } from "antd";
 import HeaderUser from "layouts/DashboardLayout/MenuHeader/HeaderUser";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { PricingTable } from "../PricingTable";
 import { PRICING } from "features/pricing/constants/pricing";
 import { SOURCE } from "modules/analytics/events/common/constants";
@@ -20,11 +20,16 @@ import { kebabCase } from "lodash";
 import { StudentProgram } from "./components/StudentProgram";
 import { isSafariBrowser } from "actions/ExtensionActions";
 import { useIsBrowserStackIntegrationOn } from "hooks/useIsBrowserStackIntegrationOn";
+import { MdOutlineInfo } from "@react-icons/all-files/md/MdOutlineInfo";
+import { MdOutlineClose } from "@react-icons/all-files/md/MdOutlineClose";
 import "./pricingIndexPage.scss";
 
 export const PricingIndexPage = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const isBrowserStackIntegrationOn = useIsBrowserStackIntegrationOn();
+  const checkoutErrorMessage = searchParams.get("errorMsg");
+  const [isErrorBannerClosed, setIsErrorBannerClosed] = useState(false);
 
   const [activeProduct, setActiveProduct] = useState(
     isSafariBrowser() ? PRICING.PRODUCTS.API_CLIENT : PRICING.PRODUCTS.HTTP_RULES
@@ -34,6 +39,15 @@ export const PricingIndexPage = () => {
   return (
     <div className="pricing-page-wrapper">
       <div className="pricing-page-container">
+        {checkoutErrorMessage && !isErrorBannerClosed && (
+          <div className="pricing-page-error-message-banner">
+            <MdOutlineInfo />
+            <span>{checkoutErrorMessage}</span>
+            <span className="pricing-page-error-message-banner-close-icon">
+              <MdOutlineClose onClick={() => setIsErrorBannerClosed(true)} />
+            </span>
+          </div>
+        )}
         <Layout.Header className="pricing-navbar">
           <div className="pricing-navbar-content">
             <img
