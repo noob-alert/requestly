@@ -273,19 +273,21 @@ export const PlanColumn: React.FC<PlanColumnProps> = ({
             </Typography.Text>
           </Row>
         )}
-        {quantity !== Infinity ? (
-          <Row className="annual-bill mt-8" style={{ display: "flex", minHeight: "17px" }}>
-            {duration === PRICING.DURATION.MONTHLY ? (
-              planName === PRICING.PLAN_NAMES.LITE ? (
-                cardSubtitle
+        <Row className="annual-bill mt-8" style={{ display: "flex", minHeight: "17px" }}>
+          {quantity !== Infinity ? (
+            <>
+              {duration === PRICING.DURATION.MONTHLY ? (
+                planName === PRICING.PLAN_NAMES.LITE ? (
+                  cardSubtitle
+                ) : (
+                  <Typography.Text>Billed monthly</Typography.Text>
+                )
               ) : (
-                <Typography.Text>Billed monthly</Typography.Text>
-              )
-            ) : (
-              cardSubtitle
-            )}
-          </Row>
-        ) : null}
+                cardSubtitle
+              )}
+            </>
+          ) : null}
+        </Row>
         <Row
           style={{
             marginTop: "24px",
