@@ -46,7 +46,7 @@ export const PlanColumn: React.FC<PlanColumnProps> = ({
   const isBrowserstackIntegrationOn = useIsBrowserStackIntegrationOn();
   const isBrowserstackCheckoutEnabled = useFeatureIsOn("browserstack_checkout");
 
-  const currentSeats = user.details?.planDetails?.subscription?.quantity;
+  const currentSeats = user.details?.planDetails?.subscription?.quantity ?? 1;
 
   const isNewCheckoutFlowEnabled = useMemo(
     () => shouldShowNewCheckoutFlow(isBrowserstackIntegrationOn, isBrowserstackCheckoutEnabled),
