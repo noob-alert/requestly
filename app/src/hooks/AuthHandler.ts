@@ -267,6 +267,7 @@ const AuthHandler: React.FC<{}> = () => {
         localStorage.removeItem("__rq_uid");
         StorageService(appMode).removeRecord(GLOBAL_CONSTANTS.STORAGE_KEYS.REFRESH_TOKEN);
         // set amplitude anon id to local storage:
+        submitAttrUtil(TRACKING.ATTR.BROWSERSTACK_ID, null);
 
         dispatch(
           // @ts-ignore
