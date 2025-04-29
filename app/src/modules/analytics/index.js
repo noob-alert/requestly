@@ -46,7 +46,17 @@ export const trackAttr = (name, value) => {
   localIntegration.trackAttr(name, value);
 };
 
-export const initIntegrations = (user, userAttributes, billingDetails, dispatch) => {
+export const initEDSIntegration = (user, userAttributes, billingDetails) => {
+  Logger.log(
+    `[analytics.initEDSIntegration] ${{
+      user,
+      userAttributes,
+      billingDetails,
+    }}`
+  );
+};
+
+export const initIntegrations = (user, dispatch) => {
   if (localStorage.getItem("dataCollectionStatus") && localStorage.getItem("dataCollectionStatus") === "disabled")
     return;
 
