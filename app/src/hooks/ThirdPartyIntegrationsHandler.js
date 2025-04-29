@@ -32,7 +32,6 @@ const ThirdPartyIntegrationsHandler = () => {
         initIntegrations(user, stableDispatch);
       }
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stableDispatch]);
 
   useEffect(() => {
