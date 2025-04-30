@@ -6,13 +6,17 @@ export const trackCheckoutButtonClicked = (duration, plan, quantity, isTrialUser
   trackEvent(BUSINESS.CHECKOUT.BUTTON_CLICKED, params);
 };
 
-export const trackCheckoutFailedEvent = (quantity, source) => {
-  trackEvent(BUSINESS.CHECKOUT.FAILED, { quantity, source });
+export const trackCheckoutFailedEvent = (quantity, source, transaction_source) => {
+  trackEvent(BUSINESS.CHECKOUT.FAILED, { quantity, source, transaction_source });
 };
 
 export const trackEnterpriseRequestEvent = (company) => {
   const params = { company };
   trackEvent(BUSINESS.CHECKOUT.ENTERPRISE_REQUESTED, params);
+};
+
+export const trackBStackStripeCheckoutInitiated = () => {
+  trackEvent(BUSINESS.CHECKOUT.BSTACK_STRIPE_INITIATED);
 };
 
 export const trackCheckoutInitiated = ({
@@ -35,8 +39,8 @@ export const trackCheckoutInitiated = ({
   trackEvent(BUSINESS.CHECKOUT.CHECKOUT_INITIATIED, params);
 };
 
-export const trackCheckoutCompleted = (is_user_on_trial = false) => {
-  const params = { is_user_on_trial };
+export const trackCheckoutCompleted = (transaction_source, is_user_on_trial = false) => {
+  const params = { transaction_source, is_user_on_trial };
 
   trackEvent(BUSINESS.CHECKOUT.CHECKOUT_COMPLETED, params);
 };
