@@ -11,7 +11,7 @@ export const trackEnterpriseRequestEvent = (company) => {
 };
 
 export const trackBStackStripeCheckoutInitiated = () => {
-  trackEvent(BUSINESS.CHECKOUT.BSTACK_STRIPE_INITIATED);
+  trackEvent(BUSINESS.CHECKOUT.BSTACK_STRIPE_CHECKOUT_INITIATED);
 };
 
 export const trackCheckoutInitiated = ({
