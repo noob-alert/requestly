@@ -119,7 +119,7 @@ const LoginHandler: React.FC = () => {
     const auth = getAuth(firebaseApp);
     signInWithCustomToken(auth, accessToken)
       .then((result) => {
-        Logger.log("User logged in successfully", user?.details);
+        Logger.log("User logged in successfully", result);
         setLoginComplete(true);
         if (isNewUser) {
           // @ts-ignore
@@ -140,7 +140,7 @@ const LoginHandler: React.FC = () => {
         // todo: setup error monitoring
         setLoginComplete(true);
       });
-  }, [params, postLoginActions, user.loggedIn, loginComplete, navigate, appMode, dispatch, isNewUser, user?.details]);
+  }, [params, postLoginActions, user.loggedIn, loginComplete, navigate, appMode, dispatch, isNewUser]);
 
   return <PageLoader message="Logging in..." />;
 };

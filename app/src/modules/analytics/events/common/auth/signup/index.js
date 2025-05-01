@@ -57,7 +57,7 @@ export const trackLoginWithSSOClicked = () => {
   trackEvent(AUTH.LOGIN.LOGIN_WITH_SSO_CLICKED);
 };
 
-export const trackGoogleSignButtonClicked = () => {
+export const trackLoginWithGoogleClicked = () => {
   trackEvent(AUTH.LOGIN.LOGIN_WITH_GOOGLE_CLICKED);
 };
 
