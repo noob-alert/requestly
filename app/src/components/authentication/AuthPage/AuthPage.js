@@ -1,19 +1,21 @@
 import React, { useEffect, useCallback, useState, useMemo } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { getUserAuthDetails } from "store/slices/global/user/selectors";
+import { getAppMode } from "store/selectors";
 // reactstrap components
 import { Col, Row } from "antd";
 //SUB COMPONENTS
 import AuthForm from "../AuthForm";
 //UTILS
-import { getUserAuthDetails } from "store/slices/global/user/selectors";
-import { redirectToRules } from "../../../utils/RedirectionUtils";
+import { redirectToHome, redirectToRules } from "../../../utils/RedirectionUtils";
 //CONSTANTS
 import APP_CONSTANTS from "../../../config/constants";
 import { getFunctions, httpsCallable } from "firebase/functions";
 import Logger from "lib/logger";
 import { getAuth, signInWithCustomToken } from "firebase/auth";
 import firebaseApp from "firebase.js";
+import { useIsBrowserStackIntegrationOn } from "hooks/useIsBrowserStackIntegrationOn";
 
 const { ACTION_LABELS: AUTH_ACTION_LABELS } = APP_CONSTANTS.AUTH;
 
@@ -21,6 +23,7 @@ const AuthPage = (props) => {
   const navigate = useNavigate();
 
   //GLOBAL STATE
+  const appMode = useSelector(getAppMode);
   const user = useSelector(getUserAuthDetails);
 
   // Component State
@@ -28,6 +31,14 @@ const AuthPage = (props) => {
   const [popoverVisible, setPopoverVisible] = useState(
     authMode === APP_CONSTANTS.AUTH.ACTION_LABELS.SIGN_UP ? true : true
   );
+
+  const isBrowserStackIntegrationOn = useIsBrowserStackIntegrationOn();
+
+  useEffect(() => {
+    if (isBrowserStackIntegrationOn) {
+      redirectToHome(appMode, navigate);
+    }
+  }, [isBrowserStackIntegrationOn, appMode, navigate]);
 
   const params = useMemo(() => new URLSearchParams(window.location.search), []);
 
@@ -92,6 +103,10 @@ const AuthPage = (props) => {
         });
     }
   }, [params]);
+
+  if (isBrowserStackIntegrationOn) {
+    return null;
+  }
 
   return (
     <React.Fragment>
