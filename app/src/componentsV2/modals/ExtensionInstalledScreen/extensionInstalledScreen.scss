@@ -18,9 +18,9 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    background-image: url("/assets/media/common/bg_grid_pattern.svg");
 
     .ant-modal-body {
-      background-image: url("/assets/media/common/bg_grid_pattern.svg");
       width: 100%;
     }
 

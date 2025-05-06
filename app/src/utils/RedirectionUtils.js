@@ -454,6 +454,10 @@ export const redirectToWebAppHomePage = (navigate) => {
   navigate(PATHS.HOME.ABSOLUTE);
 };
 
+export const redirectToStart = (navigate) => {
+  navigate(PATHS.AUTH.START.RELATIVE);
+};
+
 export function redirectToHome(appMode, navigate) {
   if (appMode === "desktop") {
     redirectToDesktopHomepage(navigate);

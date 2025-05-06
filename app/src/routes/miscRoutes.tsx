@@ -16,6 +16,7 @@ import { ImportFromCharlesWrapperView } from "features/rules/screens/rulesList/c
 import { ImportFromModheaderWrapperView } from "features/rules/screens/rulesList/components/RulesList/components/ImporterComponents/ModheaderImporter/ImportFromModheaderScreen";
 import SeleniumImporter from "views/misc/SeleniumImporter";
 import { ImportFromResourceOverrideWrapperView } from "features/rules/screens/rulesList/components/RulesList/components/ImporterComponents/ResourceOverrideImporter";
+import RouteComponent from "componentsV2/modals/ExtensionInstalledScreen/RouteComponent";
 
 export const miscRoutes: RouteObject[] = [
   {
@@ -82,6 +83,10 @@ export const miscRoutes: RouteObject[] = [
   {
     path: PATHS.CREDITS.RELATIVE,
     element: <IncentiveTasksListScreen />,
+  },
+  {
+    path: PATHS._INSTALLED_EXTENSION.RELATIVE,
+    element: <RouteComponent />,
   },
   {
     path: PATHS.SELENIUM_IMPORTER.RELATIVE,
