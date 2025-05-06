@@ -32,7 +32,6 @@ import { LoginRequiredHandler } from "hooks/LoginRequiredHandler";
 import { useAppLanguageObserver } from "hooks/useAppLanguageObserver";
 import useClientStorageService from "services/clientStorageService/hooks/useClientStorageService";
 import { GrrWarningHoc } from "features/grr";
-import ExtensionInstalledScreen from "componentsV2/modals/ExtensionInstalledScreen";
 
 const { PATHS } = APP_CONSTANTS;
 
@@ -74,7 +73,6 @@ const App: React.FC = () => {
 
   return (
     <>
-      <ExtensionInstalledScreen />
       <ExtensionContextInvalidationNotice />
       <AutomationNotAllowedNotice />
       <AppModeInitializer />
