@@ -7,10 +7,10 @@ import "./extensionInstalledScreen.scss";
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PageLoader from "components/misc/PageLoader";
-import { redirectToHome, redirectToStart } from "utils/RedirectionUtils";
 import { initIntegrations } from "./minimalIntegrations";
 import removePreloader from "actions/UI/removePreloader";
 import getExtensionInstallLink from "./getExtensionInstallLink";
+import PATHS from "config/constants/sub/paths";
 
 /* TEMPORARY COMPONENT, SHOULD BE REMOVED AFTER NEXT EXTENSION RELEASE */
 const ExtensionInstalledScreen = () => {
@@ -45,9 +45,9 @@ const ExtensionInstalledScreen = () => {
     }
 
     if (isBstackUser) {
-      redirectToStart(navigate);
+      navigate(PATHS.AUTH.START.RELATIVE, { replace: true });
     } else {
-      redirectToHome("EXTENSION", navigate);
+      navigate(PATHS.HOME.ABSOLUTE, { replace: true });
     }
   }, [isBstackUser, navigate]);
 
