@@ -4,10 +4,9 @@ import { MdWarningAmber } from "@react-icons/all-files/md/MdWarningAmber";
 import { isExtensionInstalled } from "actions/ExtensionActions";
 import LINKS from "config/constants/sub/links";
 import "./extensionInstalledScreen.scss";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useCallback, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import PageLoader from "components/misc/PageLoader";
-import PATHS from "config/constants/sub/paths";
 import { redirectToHome, redirectToStart } from "utils/RedirectionUtils";
 import { initIntegrations } from "./minimalIntegrations";
 import removePreloader from "actions/UI/removePreloader";
@@ -24,11 +23,6 @@ const ExtensionInstalledScreen = () => {
 
   const [isParamsCleaned, setIsParamsCleaned] = useState(false);
   const [isBstackUser, setIsBstackUser] = useState(false);
-
-  const { pathname } = useLocation();
-  const shouldShowModal = useMemo(() => {
-    return pathname.includes(PATHS._INSTALLED_EXTENSION.RELATIVE);
-  }, [pathname]);
 
   useEffect(() => {
     if (!isParamsCleaned) {
@@ -72,7 +66,7 @@ const ExtensionInstalledScreen = () => {
   return (
     <Modal // to quickly have a "full screen"
       zIndex={2000} // to make sure it is on the top of all other modals thrown by the app
-      open={shouldShowModal}
+      open={true}
       footer={null}
       closable={false}
       className="extension-installed-status-modal"
