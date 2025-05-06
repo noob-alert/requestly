@@ -34,6 +34,7 @@ import { RequestBot } from "features/requestBot";
 import { useCheckLocalSyncSupport } from "features/apiClient/helpers/modules/sync/useCheckLocalSyncSupport";
 import { OnboardingModal, PersonaSurveyModal } from "features/onboarding";
 import { useIsBrowserStackIntegrationOn } from "hooks/useIsBrowserStackIntegrationOn";
+import { ExtensionInstalledStatusModal } from "componentsV2/modals/ExtensionInstalledStatusModal/ExtensionInstalledStatusModal";
 
 const DashboardContent = () => {
   const location = useLocation();
@@ -233,6 +234,7 @@ const DashboardContent = () => {
           <RequestBillingTeamAccessReminder />
 
           <RequestBot isOpen={isRequestBotVisible} onClose={closeRequestBot} modelType={requestBotDetails?.modelType} />
+          <ExtensionInstalledStatusModal />
         </>
       )}
     </>
