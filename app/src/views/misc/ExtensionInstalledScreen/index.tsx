@@ -10,16 +10,19 @@ import PageLoader from "components/misc/PageLoader";
 import PATHS from "config/constants/sub/paths";
 import { redirectToHome, redirectToStart } from "utils/RedirectionUtils";
 import { initIntegrations } from "./minimalIntegrations";
+import removePreloader from "actions/UI/removePreloader";
+import getExtensionInstallLink from "./getExtensionInstallLink";
 
 /* TEMPORARY COMPONENT, SHOULD BE REMOVED AFTER NEXT EXTENSION RELEASE */
 const ExtensionInstalledScreen = () => {
   useEffect(() => {
+    removePreloader();
     initIntegrations();
   }, []);
 
   const navigate = useNavigate();
 
-  const [isIntegrationDone, setIsIntegrationDone] = useState(false);
+  const [isParamsCleaned, setIsParamsCleaned] = useState(false);
   const [isBstackUser, setIsBstackUser] = useState(false);
 
   const { pathname } = useLocation();
@@ -28,36 +31,25 @@ const ExtensionInstalledScreen = () => {
   }, [pathname]);
 
   useEffect(() => {
-    if (!isIntegrationDone) {
+    if (!isParamsCleaned) {
       const pageURL = new URL(window.location.href);
       const params = new URLSearchParams(pageURL.search);
-      if (pageURL.pathname.includes(PATHS._INSTALLED_EXTENSION.RELATIVE) && params.has("isBstack")) {
+      if (params.has("isBstack")) {
         setIsBstackUser(true);
         params.delete("isBstack");
         const newSearch = params.toString();
         navigate({ search: newSearch ? `?${newSearch}` : "" }, { replace: true });
       }
-      setIsIntegrationDone(true);
+      setIsParamsCleaned(true);
     }
-  }, [isIntegrationDone, navigate]);
-
-  /* backup useEffect to take user to app if integration does not complete */
-  useEffect(() => {
-    let id: NodeJS.Timeout | null = null;
-    if (!isIntegrationDone) {
-      id = setTimeout(() => {
-        redirectToHome("EXTENSION", navigate);
-      }, 7_000);
-    }
-
-    return () => {
-      if (id) {
-        clearTimeout(id);
-      }
-    };
-  }, [isIntegrationDone, navigate]);
+  }, [isParamsCleaned, navigate]);
 
   const handleButtonClick = useCallback(() => {
+    if (!isExtensionInstalled()) {
+      window.open(getExtensionInstallLink(), "_self");
+      return;
+    }
+
     if (isBstackUser) {
       redirectToStart(navigate);
     } else {
@@ -86,7 +78,7 @@ const ExtensionInstalledScreen = () => {
       className="extension-installed-status-modal"
       wrapClassName="extension-installed-status-modal-wrapper"
     >
-      {isIntegrationDone ? (
+      {isParamsCleaned ? (
         <>
           <div className="extension-installed-status-content">
             <img src="/assets/media/common/RQ-BStack Logo.svg" alt="Requestly by Browserstack" />
